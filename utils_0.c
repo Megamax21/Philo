@@ -1,7 +1,4 @@
 #include "philo.h"
-#include <cerrno>
-#include <cmath>
-#include <pthread.h>
 
 void	ft_err_exit(const char *err)
 {
@@ -18,6 +15,7 @@ void	*ft_smalloc (size_t b)
 		ft_err_exit(R "MALLOC HAS AN ERROR !\n" RESET);
 	return (ret);
 }
+
 static void ft_emutex(int state, t_lockstate lockstate) /* Mutex error handler*/
 {
 	if (state == 0)
@@ -37,6 +35,8 @@ static void ft_emutex(int state, t_lockstate lockstate) /* Mutex error handler*/
 
 
 }
+
+/* ft_smutex will handle the different states of the mutexes in a safe way */
 void	ft_smutex(pthread_mutex_t *mutex, t_lockstate lockstate) /* Safe Mutex */
 {
 	if (lockstate == LOCK)
@@ -50,4 +50,27 @@ void	ft_smutex(pthread_mutex_t *mutex, t_lockstate lockstate) /* Safe Mutex */
 	else
 	 	ft_err_exit(R "WRONG STATE OF ENUM\n");
 }
+
+void	ft_sthread(pthread_t *thread, void *(*foo)(void *),
+	void *(data), t_lockstate lockstate) /* Safe Thread */
+{
+	if (lockstate == CREATE)
+	{
+		if (pthread_create(thread, NULL, foo, data) != 0)
+			ft_err_exit(R "THREAD CREATION FAILED !\n" RESET);
+	}
+	else if (lockstate == JOIN)
+	{
+		if (pthread_join(*thread, NULL) != 0)
+			ft_err_exit(R "THREAD JOIN FAILED !\n" RESET);
+	}
+	else if (lockstate == DETACH)
+	{
+		if (pthread_detach(*thread) != 0)
+			ft_err_exit(R "THREAD DETACH FAILED !\n" RESET);
+	}
+	else
+	 	ft_err_exit(R "WRONG STATE OF ENUM\n");
+}
+
 

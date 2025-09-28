@@ -12,7 +12,7 @@ const char	*ft_check_nbr(const char *s)
 	i = 0;
 	len = 0;
 	
-	while ((s[i] >= 9 && s[i] <= 13 || 32 == s[i]))
+	while ((s[i] >= 9 && s[i] <= 13) || 32 == s[i])
 		i++;
 	if (s[i] == '+')
 		i++;
