@@ -65,7 +65,14 @@ void	ft_parsing(t_table *table, char **av)
 		|| table->time_to_eat < 60000)
 		ft_err_exit(R "VALUES MUST NOT BE UNDER 60 MS !\n" RESET);
 	if (av[5])
+	{
+		printf("YOOOOO MAN !\n");
 		table->nbr_limit_meals = ft_atol(av[5]);
+		printf("YOLLLOOO MAN !\n");
+	}
 	else
+	{
+		printf("WHAAATT THA HELLLLL\n");
 	 	table->nbr_limit_meals = -1;
+	}
 }

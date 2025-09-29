@@ -44,13 +44,18 @@ void	ft_init(t_table *table)
 	printf("philo_nbr before malloc: %ld\n", table->philo_nbr); // Add this line
 	table->philos = ft_smalloc(sizeof(t_philo) * table->philo_nbr);
 	table->forks = ft_smalloc(sizeof(t_fork) * table->philo_nbr);
+	printf("IS IT OK ?\n");
 	table->threads_ready = 0;
 	ft_smutex(&table->t_mutex, INIT);
+	printf("Man...\n");
 	while (i < table->philo_nbr)
 	{
 		ft_smutex(&table->forks[i].fork, INIT);
+		printf("INIT %i\n", i);
 		table->forks[i].fork_id = i;
 		i++;
 	}
+	printf("BONJOUUUR\n");
 	ft_philo_init(table);
+	printf("BONSOIIIR\n");
 }

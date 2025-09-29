@@ -41,14 +41,21 @@ void	ft_start(t_table *table)
 		}
 	}
 
+	printf(C "BONJOUR TOUT LE MONDE JE SUIS LE PRINTF DE LA FONCTION FT START\n" RESET);
+
 	table->start_simulation = ft_get_time(MILLI);
 	
+	printf(C "FT GET TIME ??\n" RESET);
 	ft_set_bool(&table->t_mutex, &table->threads_ready, 1);
 	
+	printf(C "FT SET BOOL 00 ??\n" RESET);
 	i = 0;
+	printf(C "Philo nbr = %li\n" RESET, table->philo_nbr);
 	while (i < table->philo_nbr)
 	{
+		printf(C "THREAD JOINING N %i\n" RESET, i);
 		ft_sthread(&table->philos[i].thread_id, NULL, NULL, JOIN);
+		printf(C "THREAD JOINING N %i DONE\n" RESET, i);
 		i++;
 	}
 }

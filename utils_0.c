@@ -54,6 +54,8 @@ void	ft_smutex(pthread_mutex_t *mutex, t_lockstate lockstate) /* Safe Mutex */
 void	ft_sthread(pthread_t *thread, void *(*foo)(void *),
 	void *(data), t_lockstate lockstate) /* Safe Thread */
 {
+
+	printf(C "YO ??\n" RESET);
 	if (lockstate == CREATE)
 	{
 		if (pthread_create(thread, NULL, foo, data) != 0)
@@ -61,8 +63,13 @@ void	ft_sthread(pthread_t *thread, void *(*foo)(void *),
 	}
 	else if (lockstate == JOIN)
 	{
+		printf("WHAAT ??\n");
 		if (pthread_join(*thread, NULL) != 0)
+		{
+			printf(R "NO GOD PLEASE NO\n" RESET);
 			ft_err_exit(R "THREAD JOIN FAILED !\n" RESET);
+		}
+		printf(R "AW HELLL NAH\n" RESET);
 	}
 	else if (lockstate == DETACH)
 	{
