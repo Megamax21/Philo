@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:14 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/09/29 18:32:45 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/09/29 21:46:53 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 /* Structs */
 typedef struct	s_fork
 {
-    pthread_mutex_t fork;
+    pthread_mutex_t	fork;
     int				fork_id;
 }					t_fork;
 
@@ -41,34 +41,34 @@ typedef struct s_table t_table;
 
 typedef struct	s_philo
 {
-    int			id;
-    long		meals_counter;
-    int			full;
-    long		last_meal_time;
-    t_fork		*l_fork;
-    t_fork		*r_fork;
-    pthread_t	thread_id;
-    t_table     *table;
-	pthread_mutex_t philo_mtx;
+    int				id;
+    long			meals_counter;
+    int				full;
+    long			last_meal_time;
+    t_fork			*l_fork;
+    t_fork			*r_fork;
+    pthread_t		thread_id;
+    t_table			*table;
+	pthread_mutex_t	philo_mtx;
 }				t_philo;
 
-typedef struct s_table
+typedef struct	s_table
 {
-    long	philo_nbr;
-    long	time_to_die;
-    long	time_to_eat;
-    long	time_to_sleep;
-    long	nbr_limit_meals;
-    long	start_simulation;
-    int		end_simulation;
-    int     threads_ready;
-    t_fork	*forks;
-    t_philo	*philos;
-    pthread_mutex_t print_mutex;
-    pthread_mutex_t t_mutex;
+    long			philo_nbr;
+    long			time_to_die;
+    long			time_to_eat;
+    long			time_to_sleep;
+    long			nbr_limit_meals;
+    long			start_simulation;
+    int				end_simulation;
+    int				threads_ready;
+    t_fork			*forks;
+    t_philo			*philos;
+    pthread_mutex_t	print_mutex;
+    pthread_mutex_t	t_mutex;
 }			t_table;
 
-typedef enum e_lockstate
+typedef enum	e_lockstate
 {
     LOCK,
     UNLOCK,
@@ -79,14 +79,14 @@ typedef enum e_lockstate
     DETACH,
 }		t_lockstate;
 
-typedef enum e_timecode
+typedef enum	e_timecode
 {
 	SECONDS,
 	MILLI,
 	MICRO,
 }		t_timecode;
 
-typedef enum e_status
+typedef enum	e_status
 {
 	EATING,
 	SLEEPING,
@@ -123,12 +123,12 @@ int			ft_get_bool(pthread_mutex_t *mutex, int *val);
 int			ft_get_long(pthread_mutex_t *mutex, long *val);
 int			ft_get_EOSimulation(t_table *table);
 long		ft_get_time(t_timecode timecode);
-
+void		*ft_monitor_simulation(void *arg);
 void		ft_precise_sleep(long useconds, t_table *table);
 void		ft_wait4threads(t_table *table);
 void		write_status_debug(t_status status, t_philo *philo, long passed);
 void		ft_print_status(t_status status, t_philo *philo, int debug);
-void           print_dbg(t_philo *philo, const char *str);
+void		print_dbg(t_philo *philo, const char *str);
 void		ft_start(t_table *table);
 void		*ft_sim(void *data);
 void		ft_sleep(t_philo *philo);

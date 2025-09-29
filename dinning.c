@@ -26,6 +26,7 @@ static void	ft_eat(t_philo *philo)
 void	ft_start(t_table *table)
 {
 	int	i;
+	pthread_t monitor_thread;
 
 	i = 0;
 	if (table->nbr_limit_meals == 0)
@@ -34,12 +35,17 @@ void	ft_start(t_table *table)
 		; // TODO
 	else
 	{
+		// Start monitor thread
+		if (pthread_create(&monitor_thread, NULL, ft_monitor_simulation, table) != 0)
+			ft_err_exit(R "MONITOR THREAD CREATION FAILED!\n" RESET);
+
 		while (i < table->philo_nbr) /* Creation of threads for each philo */
 		{
 			ft_sthread(&table->philos[i].thread_id, ft_sim, &table->philos[i], CREATE);
 			i++;
 		}
 	}
+
 
 	printf(C "BONJOUR TOUT LE MONDE JE SUIS LE PRINTF DE LA FONCTION FT START\n" RESET);
 
@@ -58,6 +64,8 @@ void	ft_start(t_table *table)
 		printf(C "THREAD JOINING N %i DONE\n" RESET, i);
 		i++;
 	}
+
+	pthread_join(monitor_thread, NULL);
 }
 
 void	*ft_sim(void *data)
