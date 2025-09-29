@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ml-hote <ml-hote@student.42nice.fr>        +#+  +:+       +#+        */
+/*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:14 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/09/29 00:06:00 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/09/29 18:32:45 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_table
     int     threads_ready;
     t_fork	*forks;
     t_philo	*philos;
+    pthread_mutex_t print_mutex;
     pthread_mutex_t t_mutex;
 }			t_table;
 
@@ -127,6 +128,7 @@ void		ft_precise_sleep(long useconds, t_table *table);
 void		ft_wait4threads(t_table *table);
 void		write_status_debug(t_status status, t_philo *philo, long passed);
 void		ft_print_status(t_status status, t_philo *philo, int debug);
+void           print_dbg(t_philo *philo, const char *str);
 void		ft_start(t_table *table);
 void		*ft_sim(void *data);
 void		ft_sleep(t_philo *philo);

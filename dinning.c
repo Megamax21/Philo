@@ -65,26 +65,27 @@ void	*ft_sim(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	printf(R "HEEEELP ME\n" RESET);
 	ft_wait4threads(philo->table);
-	printf(R "WAAAAAAAAA NOSOTROS\n" RESET);
+	print_dbg(philo, R "WAAAAAAAAA" RESET);
 
 	while (ft_get_EOSimulation(philo->table) == 0)
 	{
-		printf(R "WAAAAAAAAA YO\n" RESET);
+		print_dbg(philo, R "WAAAAAAAAA YO" RESET);
 		if (philo->full == 1)
 			break ;
 		
+		print_dbg(philo, R "WAAAAAAAAA YOU" RESET);
 		ft_eat(philo);
-		printf(R "WAAAAAAAAA YOU\n" RESET);
+
 
 		ft_print_status(SLEEPING, philo, DEBUG_MODE);
 		ft_precise_sleep(philo->table->time_to_sleep, philo->table);
 		
 		ft_think(philo);
-		printf(R "WAAAAAAAAA THEY\n" RESET);
+		print_dbg(philo, R "WAAAAAAAAA THEY" RESET);
+
 	}
 
-	printf(R "WAAAAAAAAA ME\n" RESET);
+	print_dbg(philo, R "WAAAAAAAAA ME" RESET);
 	return (NULL);
 }

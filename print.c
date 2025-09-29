@@ -23,6 +23,13 @@ void	write_status_debug(t_status status, t_philo *philo, long passed)
 	}
 }
 
+void print_dbg(t_philo *philo, const char *str)
+{
+	ft_smutex(&philo->table->print_mutex, LOCK);
+	printf("%s\n", str);
+	ft_smutex(&philo->table->print_mutex, UNLOCK);
+}
+
 void	ft_print_status(t_status status, t_philo *philo, int debug)
 {
 	long	passed;

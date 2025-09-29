@@ -47,6 +47,7 @@ void	ft_init(t_table *table)
 	printf("IS IT OK ?\n");
 	table->threads_ready = 0;
 	ft_smutex(&table->t_mutex, INIT);
+	ft_smutex(&table->print_mutex, INIT);
 	printf("Man...\n");
 	while (i < table->philo_nbr)
 	{
