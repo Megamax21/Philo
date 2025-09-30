@@ -24,7 +24,7 @@ void	ft_set_long(pthread_mutex_t *mutex, long *dest, long value)
 	ft_smutex(mutex, UNLOCK);
 }
 
-int	ft_get_long(pthread_mutex_t *mutex, long *val)
+long	ft_get_long(pthread_mutex_t *mutex, long *val)
 {
 	long	ret;
 

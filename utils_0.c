@@ -3,7 +3,6 @@
 void	ft_err_exit(const char *err)
 {
 	printf("%s\n", err);
-	exit(EXIT_FAILURE);
 }
 
 void	*ft_smalloc (size_t b)
@@ -32,8 +31,6 @@ static void ft_emutex(int state, t_lockstate lockstate) /* Mutex error handler*/
 		ft_err_exit(R "NOT ENOUGH MEMORY FOR ANOTHER MUTEX\n" RESET);
 	else if (state == EBUSY)
 		ft_err_exit(R "MUTEX IS LOCKED !\n" RESET);
-
-
 }
 
 /* ft_smutex will handle the different states of the mutexes in a safe way */
@@ -54,8 +51,6 @@ void	ft_smutex(pthread_mutex_t *mutex, t_lockstate lockstate) /* Safe Mutex */
 void	ft_sthread(pthread_t *thread, void *(*foo)(void *),
 	void *(data), t_lockstate lockstate) /* Safe Thread */
 {
-
-	printf(C "YO ??\n" RESET);
 	if (lockstate == CREATE)
 	{
 		if (pthread_create(thread, NULL, foo, data) != 0)
@@ -63,13 +58,11 @@ void	ft_sthread(pthread_t *thread, void *(*foo)(void *),
 	}
 	else if (lockstate == JOIN)
 	{
-		printf("WHAAT ??\n");
 		if (pthread_join(*thread, NULL) != 0)
 		{
 			printf(R "NO GOD PLEASE NO\n" RESET);
 			ft_err_exit(R "THREAD JOIN FAILED !\n" RESET);
 		}
-		printf(R "AW HELLL NAH\n" RESET);
 	}
 	else if (lockstate == DETACH)
 	{

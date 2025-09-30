@@ -9,9 +9,7 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		printf("Welcome to %s\n", av[0]);
 		ft_parsing(&table, av); // Checking the entries
-		printf("HEYYYY");
 		ft_init(&table); // Filling the table
 		ft_start(&table);
 		// ft_clean(&table);

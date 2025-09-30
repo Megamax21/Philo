@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:14 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/09/29 21:46:53 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/01 00:12:07 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <sys/time.h>
 #include <limits.h>
 #include <errno.h>
+
+#include <string.h>
 // ANSI escape codes for bold color fonts in printf
 // Usage: printf(R "This is bold red text." RESET);
 #define BLACK	"\033[1;30m"
@@ -29,7 +31,7 @@
 #define W		"\033[1;37m"
 #define RESET	"\033[0m"
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 /* Structs */
 typedef struct	s_fork
 {
@@ -42,6 +44,7 @@ typedef struct s_table t_table;
 typedef struct	s_philo
 {
     int				id;
+    int             dead;
     long			meals_counter;
     int				full;
     long			last_meal_time;
@@ -61,6 +64,7 @@ typedef struct	s_table
     long			nbr_limit_meals;
     long			start_simulation;
     int				end_simulation;
+    int             dead_dude;
     int				threads_ready;
     t_fork			*forks;
     t_philo			*philos;
@@ -120,7 +124,7 @@ void		ft_init(t_table *table);
 void		ft_set_bool(pthread_mutex_t *mutex, int *dest, int value);
 void		ft_set_long(pthread_mutex_t *mutex, long *dest, long value);
 int			ft_get_bool(pthread_mutex_t *mutex, int *val);
-int			ft_get_long(pthread_mutex_t *mutex, long *val);
+long		ft_get_long(pthread_mutex_t *mutex, long *val);
 int			ft_get_EOSimulation(t_table *table);
 long		ft_get_time(t_timecode timecode);
 void		*ft_monitor_simulation(void *arg);
@@ -131,6 +135,4 @@ void		ft_print_status(t_status status, t_philo *philo, int debug);
 void		print_dbg(t_philo *philo, const char *str);
 void		ft_start(t_table *table);
 void		*ft_sim(void *data);
-void		ft_sleep(t_philo *philo);
 // void		ft_clean(t_table *table);
-

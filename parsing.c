@@ -45,7 +45,7 @@ long	ft_atol(const char *s)
 		nbr = (nbr * 10) + (s[i] - '0');
 		i++;
 	}
-	printf("VALUE ! %li\n", nbr);
+	
 	if (nbr > INT_MAX)
 		ft_err_exit(R "VALUE IS BIGGER THAN INT_MAX !\n" RESET);
 	return (nbr);
@@ -55,24 +55,15 @@ long	ft_atol(const char *s)
 void	ft_parsing(t_table *table, char **av)
 {
 	table->philo_nbr = ft_atol(av[1]);
-	table->time_to_die = ft_atol(av[2]) * 1000;
-	table->time_to_eat = ft_atol(av[3]) * 1000;
-	table->time_to_sleep = ft_atol(av[4]) * 1000;
-	printf("Values : \n");
-	printf("ttd : %li | tte : %li | tts : %li ", table->time_to_die, table->time_to_eat, table->time_to_sleep);
-	if (table->time_to_die < 60000
-		|| table->time_to_sleep < 60000
-		|| table->time_to_eat < 60000)
+	table->time_to_die = ft_atol(av[2]) ;
+	table->time_to_eat = ft_atol(av[3]) ;
+	table->time_to_sleep = ft_atol(av[4]) ;
+	if (table->time_to_die < 60
+		|| table->time_to_sleep < 60
+		|| table->time_to_eat < 60)
 		ft_err_exit(R "VALUES MUST NOT BE UNDER 60 MS !\n" RESET);
 	if (av[5])
-	{
-		printf("YOOOOO MAN !\n");
 		table->nbr_limit_meals = ft_atol(av[5]);
-		printf("YOLLLOOO MAN !\n");
-	}
 	else
-	{
-		printf("WHAAATT THA HELLLLL\n");
 	 	table->nbr_limit_meals = -1;
-	}
 }
