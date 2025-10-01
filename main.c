@@ -12,7 +12,7 @@ int	main(int ac, char **av)
 		ft_parsing(&table, av); // Checking the entries
 		ft_init(&table); // Filling the table
 		ft_start(&table);
-		// ft_cleaning(&table);
+		ft_cleaning(&table);
 	}
 	else 
 	{

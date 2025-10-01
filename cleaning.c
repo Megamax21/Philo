@@ -5,13 +5,17 @@ void	ft_cleaning(t_table *table)
 {
 	int	i;
 
-	i = 0;
-	while (i < table->philo_nbr)
+	// Destroy mutexes in philos/forks
+	for (i = 0; i < table->philo_nbr; i++)
 	{
-		// ft_smutex(&table->philos[i].philo_mtx, DESTROY);
-		// ft_smutex(&table->philos[i].counter_mtx, DESTROY);
-		// ft_smutex(&table->philos[i].r_fork->fork, DESTROY);
-		// ft_smutex(&table->philos[i].l_fork->fork, DESTROY);
-		free(&table->philos[i]);
+		pthread_mutex_destroy(&table->philos[i].philo_mtx);
+		pthread_mutex_destroy(&table->philos[i].counter_mtx);
+		pthread_mutex_destroy(&table->forks[i].fork);
 	}
+	pthread_mutex_destroy(&table->t_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
+
+	// Free the arrays
+	free(table->philos);
+	free(table->forks);
 }
