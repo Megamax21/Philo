@@ -58,8 +58,6 @@ void	ft_parsing(t_table *table, char **av)
 	table->time_to_die = ft_atol(av[2]) * 1000;
 	table->time_to_eat = ft_atol(av[3]) * 1000;
 	table->time_to_sleep = ft_atol(av[4]) * 1000;
-	// printf("ttd %li tte %li tts %li", table->time_to_die , table->time_to_eat, table->time_to_sleep);
-	// exit(1);
 	if (table->time_to_die < 60000
 		|| table->time_to_sleep < 60000
 		|| table->time_to_eat < 60000)

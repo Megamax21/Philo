@@ -22,17 +22,12 @@ int	ft_death_check(t_table *table)
 	while (i < table->philo_nbr)
 	{
 		if (ft_get_long(&table->philos[i].counter_mtx, &table->philos[i].meals_counter) == 1)
-			time_since_last_meal = (ft_get_time(MILLI) - ft_get_long(&table->philos[i].philo_mtx, 
+			time_since_last_meal = (ft_get_time(MICRO) - ft_get_long(&table->philos[i].philo_mtx, 
 			&table->philos[i].last_meal_time));
-		if (time_since_last_meal == 0)
-		{
-			printf(M "ttd : %li | tslm : %li for %i\n" RESET, table->time_to_die, time_since_last_meal, i);
-			exit(1);
-		}
 		if (time_since_last_meal > table->time_to_die)
 		{
-			printf("Someone's dead %li & %li\n", time_since_last_meal, table->time_to_die);
-			table->end_simulation = 1;
+			printf("%i is dead %li & %li\n", i, time_since_last_meal, table->time_to_die);
+			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
 			table->dead_dude = i;
 		}
 		i++;
@@ -47,13 +42,16 @@ void *ft_monitor_simulation(void *arg)
 	table = (t_table *)arg;
 	while (!ft_get_EOSimulation(table))
 	{
-		if (all_philos_full(table))
+		if (all_philos_full(table) == 1)
 		{
 			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
 			break;
 		}
 		if (ft_death_check(table) == 1)
-			exit(1);
+		{
+			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
+    		break;
+		}
 		usleep(10000); 
 	}
 	return NULL;

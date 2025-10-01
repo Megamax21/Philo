@@ -1,28 +1,5 @@
 #include "philo.h"
 
-void	write_status_debug(t_status status, t_philo *philo, long passed)
-{
-	if ((status == TAKEN_FORK_1 || status == TAKEN_FORK_2)
-		&& ft_get_EOSimulation(philo->table) == 0)
-	{
-		if (status == TAKEN_FORK_1)
-			printf("%li %i 🍴 took the left fork\n", passed, philo->id);
-		else
-			printf("%li %i 🍴 took the right fork\n", passed, philo->id);
-	}
-	else if (status == EATING)
-		printf("%li %i 🍝 is eating\n", passed, philo->id);
-	else if (status == SLEEPING)
-		printf("%li %i 😴 is sleeping\n", passed, philo->id);
-	else if (status == THINKING)
-		printf("%li %i 🤔 is thinking\n", passed, philo->id);
-	else if (status == DIED && !ft_get_EOSimulation(philo->table))
-	{
-		printf(R "%li %i 💀 died\n" RESET, passed, philo->id);
-		ft_set_int(&philo->table->t_mutex, &philo->table->end_simulation, 1);
-	}
-}
-
 void print_dbg(t_philo *philo, const char *str)
 {
 	ft_smutex(&philo->table->print_mutex, LOCK);
@@ -30,7 +7,7 @@ void print_dbg(t_philo *philo, const char *str)
 	ft_smutex(&philo->table->print_mutex, UNLOCK);
 }
 
-void	ft_print_status(t_status status, t_philo *philo, int debug)
+void	ft_print_status(t_status status, t_philo *philo)
 {
 	long	passed;
 
@@ -41,27 +18,25 @@ void	ft_print_status(t_status status, t_philo *philo, int debug)
 	if (philo->full == 1)
 		return ;
 	ft_smutex(&philo->table->t_mutex, LOCK); // lock mutex
-	if (debug == 1)
-		write_status_debug(status, philo, passed);
-	char *print;
-	if (status == TAKEN_FORK_1)
-		print = strdup("TAKEN_FORK_1");
-	else if (status == TAKEN_FORK_2)
-		print = strdup("TAKEN_FORK_2");
-	else if (status == SLEEPING)
-		print = strdup("SLEEPING");
-	else if (status == EATING)
-		print = strdup("EATING");
-	else if (status == THINKING)
-		print = strdup("THINKING");
-	else if (status == DIED)
-		print = strdup("DIED");
-	else
-	{
-		print = calloc(sizeof(char), 2);
-		print[0] = status + '0';
-		print[1] = '\0';
-	}
+	// char *print;
+	// if (status == TAKEN_FORK_1)
+	// 	print = strdup("TAKEN_FORK_1");
+	// else if (status == TAKEN_FORK_2)
+	// 	print = strdup("TAKEN_FORK_2");
+	// else if (status == SLEEPING)
+	// 	print = strdup("SLEEPING");
+	// else if (status == EATING)
+	// 	print = strdup("EATING");
+	// else if (status == THINKING)
+	// 	print = strdup("THINKING");
+	// else if (status == DIED)
+	// 	print = strdup("DIED");
+	// else
+	// {
+	// 	print = calloc(sizeof(char), 2);
+	// 	print[0] = status + '0';
+	// 	print[1] = '\0';
+	// }
 	// print_dbg(philo, print);
 	if ((status == TAKEN_FORK_1 || status == TAKEN_FORK_2)){
 		printf("%li %i has taken a fork\n", passed, philo->id);

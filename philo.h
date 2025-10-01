@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:14 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/01 01:56:21 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/01 03:46:55 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 #define W		"\033[1;37m"
 #define RESET	"\033[0m"
 
-#define DEBUG_MODE 0
 /* Structs */
 typedef struct	s_fork
 {
@@ -131,9 +130,8 @@ long		ft_get_time(t_timecode timecode);
 void		*ft_monitor_simulation(void *arg);
 void		ft_precise_sleep(long useconds, t_table *table);
 void		ft_wait4threads(t_table *table);
-void		write_status_debug(t_status status, t_philo *philo, long passed);
-void		ft_print_status(t_status status, t_philo *philo, int debug);
+void		ft_print_status(t_status status, t_philo *philo);
 void		print_dbg(t_philo *philo, const char *str);
 void		ft_start(t_table *table);
 void		*ft_sim(void *data);
-// void		ft_clean(t_table *table);
+void    	ft_cleaning(t_table *table);

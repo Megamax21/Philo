@@ -1,6 +1,6 @@
 # Compiler and flags
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS  := -Wall -Wextra -Werror -g3 #-fsanitize=thread
 SRC     := $(wildcard *.c)
 OBJ     := $(SRC:.c=.o)
 NAME    := philo
