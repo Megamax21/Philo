@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:24:07 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/02 00:59:10 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/02 01:11:19 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,11 @@ int	ft_parsing(t_table *table, char **av)
 	}
 	else
 		table->nbr_limit_meals = -1;
-	if (table->philo_nbr < 0
-		|| table->time_to_die < 0
-		|| table->time_to_sleep < 0
-		|| table->time_to_eat < 0)
+	if (table->philo_nbr <= 0
+		|| table->time_to_die <= 0
+		|| table->time_to_sleep <= 0
+		|| table->time_to_eat <= 0
+		|| table->philo_nbr > 200)
 		return (-1);
 	if (table->time_to_die < 60
 		|| table->time_to_sleep < 60000

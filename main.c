@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:25:10 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/01 19:39:50 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/02 01:12:39 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int	main(int ac, char **av)
 	{
 		if (ft_parsing(&table, av) == -1)
 		{
+			if (table.philo_nbr == 0)
+				ft_err_exit(R "WHO'S GONNA THINK FOR YOU ?" RESET);
+			else if (table.philo_nbr > 200)
+				ft_err_exit(R "WHAT DO YOU NEED ? A CITY OF PHILOSOPHERS ?" RESET);
 			return (1);
 		}
 		ft_init(&table);
