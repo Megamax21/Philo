@@ -2,11 +2,15 @@
 
 static void ft_think(t_philo *philo)
 {
-	ft_print_status(THINKING, philo);
+    if (ft_get_int(&philo->stop_mtx, &philo->stop_everything))
+        return;
+    ft_print_status(THINKING, philo);
 }
 
 static void	ft_eat(t_philo *philo)
 {
+    if (ft_get_int(&philo->stop_mtx, &philo->stop_everything))
+		return;
 
 	if (philo->id % 2 == 1)
 	{
@@ -24,25 +28,31 @@ static void	ft_eat(t_philo *philo)
 		ft_print_status(TAKEN_FORK_2, philo);
 		ft_print_status(TAKEN_FORK_1, philo);
 	}
+	ft_print_status(EATING, philo);
+	ft_precise_sleep(philo->table->time_to_eat, philo->table);
 	ft_set_long(&philo->philo_mtx, &philo->last_meal_time, (ft_get_time(MICRO)));
 	ft_smutex(&philo->counter_mtx, LOCK);
 	philo->meals_counter++;
 	ft_smutex(&philo->counter_mtx, UNLOCK);
-	ft_print_status(EATING, philo);
 	if (ft_get_long(&philo->table->t_mutex, &philo->table->nbr_limit_meals) != -1)
 	{
 		if (ft_get_long(&philo->counter_mtx, &philo->meals_counter) >= ft_get_long(&philo->table->t_mutex, &philo->table->nbr_limit_meals))
 			ft_set_int(&philo->counter_mtx, &philo->full, 1);
 	}
-	ft_precise_sleep(philo->table->time_to_eat, philo->table);
 	pthread_mutex_unlock(&philo->r_fork->fork);
 	pthread_mutex_unlock(&philo->l_fork->fork);
 }
 
 static void	ft_sleep(t_philo *philo)
 {
-	if (philo->meals_counter == 0)
+	if (ft_get_int(&philo->stop_mtx, &philo->stop_everything))
+	{
 		return ;
+	}
+	if (philo->meals_counter == 0)
+	{
+		return ;
+	}
 	ft_print_status(SLEEPING, philo);
 	ft_precise_sleep(philo->table->time_to_sleep, philo->table);
 }
@@ -84,15 +94,15 @@ void	ft_start(t_table *table)
 
 void	*ft_sim(void *data)
 {
-	t_philo	*philo;
+    t_philo	*philo;
 
-	philo = (t_philo *)data;
-	ft_wait4threads(philo->table);	
-	while (ft_get_EOSimulation(philo->table) == 0)
-	{
-		ft_think(philo);
-		ft_eat(philo);
-		ft_sleep(philo);
-	}
-	return (NULL);
+    philo = (t_philo *)data;
+    ft_wait4threads(philo->table);	
+    while (!ft_get_int(&philo->stop_mtx, &philo->stop_everything))
+    {
+        ft_think(philo);
+        ft_eat(philo);
+        ft_sleep(philo);
+    }
+    return (NULL);
 }

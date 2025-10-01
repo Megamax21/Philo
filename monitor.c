@@ -12,6 +12,13 @@ static int all_philos_full(t_table *table)
 	return 1;
 }
 
+void set_all_philos_stop(t_table *table)
+{
+    int i;
+    for (i = 0; i < table->philo_nbr; i++)
+        ft_set_int(&table->philos[i].stop_mtx, &table->philos[i].stop_everything, 1);
+}
+
 int	ft_death_check(t_table *table)
 {
 	int	i;
@@ -26,31 +33,35 @@ int	ft_death_check(t_table *table)
 			&table->philos[i].last_meal_time));
 		if (time_since_last_meal > table->time_to_die)
 		{
-			printf("%i is dead %li & %li\n", i, time_since_last_meal, table->time_to_die);
+			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
+			ft_print_status(DIED, &table->philos[i]);
 			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
 			table->dead_dude = i;
+			return (1);
 		}
 		i++;
 	}
 
 	return (0);
 }
+
 // Monitor thread function
 void *ft_monitor_simulation(void *arg)
 {
-	t_table *table;
-	table = (t_table *)arg;
+	t_table *table = (t_table *)arg;
 	while (!ft_get_EOSimulation(table))
 	{
 		if (all_philos_full(table) == 1)
 		{
 			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
+			set_all_philos_stop(table);
 			break;
 		}
 		if (ft_death_check(table) == 1)
 		{
 			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
-    		break;
+			set_all_philos_stop(table);
+			break;
 		}
 		usleep(10000); 
 	}

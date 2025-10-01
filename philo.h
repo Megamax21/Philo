@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ml-hote <ml-hote@student.42nice.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:14 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/01 03:46:55 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/01 06:07:02 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ typedef struct	s_philo
     long			meals_counter;
     int				full;
     long			last_meal_time;
+    int             stop_everything;
     t_fork			*l_fork;
     t_fork			*r_fork;
     pthread_t		thread_id;
     t_table			*table;
 	pthread_mutex_t	philo_mtx;
+    pthread_mutex_t stop_mtx;
     pthread_mutex_t counter_mtx;
 }				t_philo;
 
