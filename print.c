@@ -19,7 +19,7 @@ void	write_status_debug(t_status status, t_philo *philo, long passed)
 	else if (status == DIED && !ft_get_EOSimulation(philo->table))
 	{
 		printf(R "%li %i 💀 died\n" RESET, passed, philo->id);
-		ft_set_bool(&philo->table->t_mutex, &philo->table->end_simulation, 1);
+		ft_set_int(&philo->table->t_mutex, &philo->table->end_simulation, 1);
 	}
 }
 
@@ -78,7 +78,7 @@ void	ft_print_status(t_status status, t_philo *philo, int debug)
 	else if (status == DIED && !ft_get_EOSimulation(philo->table))
 	{
 		printf(R "%li %i died\n" RESET, passed, philo->id);
-		ft_set_bool(&philo->table->t_mutex, &philo->table->end_simulation, 1);
+		ft_set_int(&philo->table->t_mutex, &philo->table->end_simulation, 1);
 	}
 	else {
 		print_dbg(philo, "No status");

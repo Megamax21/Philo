@@ -30,6 +30,7 @@ static void	ft_philo_init(t_table *table)
 		philos->full = 0;
 		philos->table = table;
 		ft_smutex(&philos->philo_mtx, INIT);
+		ft_smutex(&philos->counter_mtx, INIT);
 		// ft_putforks(philos, table->forks, i);
 		philos->l_fork = &table->forks[i];
 		// printf("philo %i take %p fork\n", philos->id, &philos->l_fork->fork_id);

@@ -1,7 +1,7 @@
 #include "philo.h"
 void ft_wait4threads(t_table *table)
 {
-	while (!ft_get_bool(&table->t_mutex, &table->threads_ready))
+	while (!ft_get_int(&table->t_mutex, &table->threads_ready))
 		;
 }
 

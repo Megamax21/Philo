@@ -38,12 +38,15 @@ static void	ft_eat(t_philo *philo)
 		ft_print_status(TAKEN_FORK_1, philo, DEBUG_MODE);
 		
 	}
+	// printf("How long : %li & %li\n", ft_get_time(MILLI) , ft_get_long(&philo->philo_mtx, &philo->last_meal_time));
 	ft_set_long(&philo->philo_mtx, &philo->last_meal_time, (ft_get_time(MILLI)));
+	ft_smutex(&philo->counter_mtx, LOCK);
 	philo->meals_counter++;
+	ft_smutex(&philo->counter_mtx, UNLOCK);
 	ft_print_status(EATING, philo, DEBUG_MODE);
 	ft_precise_sleep(philo->table->time_to_eat, philo->table);
 	// if (philo->table->nbr_limit_meals > 0 && philo->meals_counter >= philo->table->nbr_limit_meals)
-	// 	ft_set_bool(&philo->philo_mtx, &philo->full, 1);
+	// 	ft_set_int(&philo->philo_mtx, &philo->full, 1);
 
 	pthread_mutex_unlock(&philo->r_fork->fork);
 	pthread_mutex_unlock(&philo->l_fork->fork);
@@ -87,7 +90,7 @@ void	ft_start(t_table *table)
 		}
 	}
 	table->start_simulation = ft_get_time(MILLI);
-	ft_set_bool(&table->t_mutex, &table->threads_ready, 1);
+	ft_set_int(&table->t_mutex, &table->threads_ready, 1);
 	i = 0;
 	printf(C "Philo nbr = %li\n" RESET, table->philo_nbr);
 	while (i < table->philo_nbr)
@@ -114,11 +117,11 @@ void	*ft_sim(void *data)
 			// printf(M"%li WHAT'S THE TIME ?\n"RESET, (ft_get_time(MILLI) - ft_get_long(&philo->philo_mtx, &philo->last_meal_time)));
 			// printf("MMH ? %li\n", philo->table->time_to_die);
 			// if ((ft_get_time(MILLI) - philo->last_meal_time) > philo->table->time_to_die)
-			// 	ft_set_bool(&philo->philo_mtx, &philo->dead, 1);
+			// 	ft_set_int(&philo->philo_mtx, &philo->dead, 1);
 		}
 		ft_eat(philo);
 		ft_sleep(philo);
-		// ft_set_bool(&philo->table->t_mutex, &philo->table->end_simulation, 1);
+		// ft_set_int(&philo->table->t_mutex, &philo->table->end_simulation, 1);
 	}
 	return (NULL);
 }

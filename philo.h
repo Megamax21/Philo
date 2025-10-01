@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 09:53:14 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/01 00:12:07 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/01 01:56:21 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct	s_philo
     pthread_t		thread_id;
     t_table			*table;
 	pthread_mutex_t	philo_mtx;
+    pthread_mutex_t counter_mtx;
 }				t_philo;
 
 typedef struct	s_table
@@ -121,9 +122,9 @@ void		ft_parsing(t_table *table, char **av);
 void		ft_init(t_table *table);
 
 /* Gets and sets*/
-void		ft_set_bool(pthread_mutex_t *mutex, int *dest, int value);
+void		ft_set_int(pthread_mutex_t *mutex, int *dest, int value);
 void		ft_set_long(pthread_mutex_t *mutex, long *dest, long value);
-int			ft_get_bool(pthread_mutex_t *mutex, int *val);
+int			ft_get_int(pthread_mutex_t *mutex, int *val);
 long		ft_get_long(pthread_mutex_t *mutex, long *val);
 int			ft_get_EOSimulation(t_table *table);
 long		ft_get_time(t_timecode timecode);
