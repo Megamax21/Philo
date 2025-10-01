@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_set.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 19:33:36 by ml-hote           #+#    #+#             */
+/*   Updated: 2025/10/01 19:33:37 by ml-hote          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_set_int(pthread_mutex_t *mutex, int *dest, int value)
@@ -14,7 +26,7 @@ int	ft_get_int(pthread_mutex_t *mutex, int *val)
 	ft_smutex(mutex, LOCK);
 	ret = *val;
 	ft_smutex(mutex, UNLOCK);
-	return(ret);
+	return (ret);
 }
 
 void	ft_set_long(pthread_mutex_t *mutex, long *dest, long value)
@@ -31,10 +43,10 @@ long	ft_get_long(pthread_mutex_t *mutex, long *val)
 	ft_smutex(mutex, LOCK);
 	ret = *val;
 	ft_smutex(mutex, UNLOCK);
-	return(ret);
+	return (ret);
 }
 
-int	ft_get_EOSimulation(t_table *table)
+int	ft_get_eosimulation(t_table *table)
 {
-	return(ft_get_int(&table->t_mutex, &table->end_simulation));
+	return (ft_get_int(&table->t_mutex, &table->end_simulation));
 }

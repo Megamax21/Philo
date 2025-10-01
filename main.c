@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 18:25:10 by ml-hote           #+#    #+#             */
+/*   Updated: 2025/10/01 19:39:50 by ml-hote          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
-
-// ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
-
 
 int	main(int ac, char **av)
 {
@@ -9,17 +18,20 @@ int	main(int ac, char **av)
 
 	if (ac == 5 || ac == 6)
 	{
-		ft_parsing(&table, av); // Checking the entries
-		ft_init(&table); // Filling the table
+		if (ft_parsing(&table, av) == -1)
+		{
+			return (1);
+		}
+		ft_init(&table);
 		ft_start(&table);
 		ft_cleaning(&table);
 	}
-	else 
+	else
 	{
-		ft_err_exit(R "Wrong input" RESET ", Correct one is " 
-			G "./philo number_of_philosophers time_to_die time_to_eat time_to_sleep"
+		ft_err_exit(R "Wrong input" RESET ", Correct one is "
+			G "./philo number_of_philosophers \
+			time_to_die time_to_eat time_to_sleep"
 			"[number_of_times_each_philosopher_must_eat]" RESET);
 	}
-
 	return (0);
 }
