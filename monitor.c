@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 17:39:21 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/02 01:36:41 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/02 02:14:17 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	*ft_monitor_simulation(void *arg)
 		{
 			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
 			set_all_philos_stop(table);
-			printf(G "All philosophers ate at least %ld meals\n" RESET, table->nbr_limit_meals);
+			printf(G "All philosophers ate at least %ld meals\n" RESET,
+				table->nbr_limit_meals);
 			break ;
 		}
 		if (ft_death_check(table) == 1)
 		{
 			ft_set_int(&table->t_mutex, &table->end_simulation, 1);
-			printf(R "AYOOOOOOOOO\n" RESET);
 			break ;
 		}
 	}

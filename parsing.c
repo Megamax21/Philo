@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 18:24:07 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/02 01:11:19 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/02 02:11:05 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ long	ft_atol(const char *s)
 	if (nbr > INT_MAX)
 	{
 		ft_err_exit(R "VALUE IS BIGGER THAN INT_MAX !" RESET);
-		return (-1);	
+		return (-1);
 	}
 	return (nbr);
 }
@@ -81,23 +81,27 @@ int	ft_parsing(t_table *table, char **av)
 	if (av[5])
 	{
 		table->nbr_limit_meals = ft_atol(av[5]);
-		if (table->nbr_limit_meals < 0)
+		if (table->nbr_limit_meals <= 0)
 			return (-1);
 	}
 	else
 		table->nbr_limit_meals = -1;
 	if (table->philo_nbr <= 0
-		|| table->time_to_die <= 0
-		|| table->time_to_sleep <= 0
-		|| table->time_to_eat <= 0
-		|| table->philo_nbr > 200)
+		|| table->time_to_die <= 0 || table->time_to_sleep <= 0
+		|| table->time_to_eat <= 0 || table->philo_nbr > 200)
 		return (-1);
-	if (table->time_to_die < 60
-		|| table->time_to_sleep < 60000
+	if (table->time_to_die < 60 || table->time_to_sleep < 60000
 		|| table->time_to_eat < 60000)
 	{
 		ft_err_exit(R "VALUES MUST NOT BE UNDER 60 MS !" RESET);
 		return (-1);
 	}
 	return (0);
+}
+
+void	ft_print_e_parsing(t_table *table)
+{
+	if (table->time_to_die <= 0 || table->time_to_sleep <= 0
+		|| table->time_to_eat <= 0 || table->nbr_limit_meals == 0)
+		ft_err_exit(R "VALUES MUST NOT BE NULL !" RESET);
 }

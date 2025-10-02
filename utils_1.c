@@ -6,7 +6,7 @@
 /*   By: ml-hote <ml-hote@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 19:36:19 by ml-hote           #+#    #+#             */
-/*   Updated: 2025/10/02 00:52:55 by ml-hote          ###   ########.fr       */
+/*   Updated: 2025/10/02 02:19:14 by ml-hote          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,39 @@ long	ft_get_time(t_timecode timecode)
 	return (0);
 }
 
+static void	ft_do_sleep(t_table *table, int nb_sleeps, long residue)
+{
+	while (ft_get_eosimulation(table) && nb_sleeps > 0)
+	{
+		usleep(100);
+		nb_sleeps--;
+	}
+	usleep(residue);
+}
+
 void	ft_precise_sleep(long useconds, t_table *table)
 {
 	long	start;
-	long	passed;
 	long	remain;
+	long	nb_sleeps;
+	long	residue;
 
 	start = ft_get_time(MICRO);
 	while (ft_get_time(MICRO) - start < useconds)
 	{
 		if (ft_get_eosimulation(table))
 			break ;
-		passed = ft_get_time(MICRO) - start;
-		remain = useconds - passed;
+		remain = useconds - (ft_get_time(MICRO) - start);
 		if (remain > 1000)
 		{
-			long nb_sleeps = (remain - 1000) / 100;
-			long residue = (remain - 1000) % 100;
-			int i = 0;
-
-			while (ft_get_eosimulation(table) && i < nb_sleeps)
-			{
-				usleep(100);
-				i++;
-			}
-			usleep(residue);
+			nb_sleeps = (remain - 1000) / 100;
+			residue = (remain - 1000) % 100;
+			ft_do_sleep(table, nb_sleeps, residue);
 		}
 		else
 		{
-			while (ft_get_eosimulation(table) && ft_get_time(MICRO) - start < useconds)
+			while (ft_get_eosimulation(table)
+				&& ft_get_time(MICRO) - start < useconds)
 				;
 		}
 	}
